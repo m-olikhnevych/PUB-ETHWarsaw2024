@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Beer } from 'lucide-react'
 import { RainbowKitProvider, darkTheme } from '@rainbow-me/rainbowkit'
@@ -29,12 +29,16 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false)
   useEffect(() => setMounted(true), [])
 
+  const chains = {
+    chains: config.chains
+  }
+
   return (
     <html lang="en">
     <body className="bg-gray-900 text-gray-100">
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
-        <RainbowKitProvider chains={config.chains} theme={darkTheme()}>
+        <RainbowKitProvider {...chains} theme={darkTheme()}>
           <div className="min-h-screen flex flex-col">
             <header className="bg-gray-800 p-4">
               <div className="container mx-auto flex justify-between items-center">
