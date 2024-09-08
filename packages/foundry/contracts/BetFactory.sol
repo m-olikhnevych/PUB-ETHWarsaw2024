@@ -40,10 +40,10 @@ contract BetFactory {
     return (betId, newBet);
   }
 
-  function solveBet(uint256 betId) public {
+  function solveBet(uint256 betId) public payable {
     Bet bet = Bet(bets[betId].betAddress);
     require(block.timestamp > bet.getEndTimestamp(), "Bet is not closed yet");
-    uint requestId = prompt.calculateAIResult(11, bet.getPrompt());
+    uint requestId = prompt.calculateAIResult{value: msg.value}(11, bet.getPrompt());
     bets[betId].requestId = requestId;
     bets[betId].status = SolveStatus.SOLVING;
     requestsToBets[requestId] = betId;

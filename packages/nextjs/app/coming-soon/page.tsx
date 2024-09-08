@@ -8,7 +8,7 @@ export default function Page() {
             Exciting Things Are Coming Soon
           </h2>
           <p className="text-xl md:text-2xl text-gray-400 mb-12 animate-fade-in-up">
-            We're working hard to bring you the ultimate betting experience. Stay tuned for our launch!
+            We&apos;re working hard to bring you the ultimate betting experience. Stay tuned for our launch!
           </p>
           <div className="flex justify-center items-center space-x-4 animate-pulse">
             <Loader2 className="w-8 h-8 text-yellow-400 animate-spin"/>
