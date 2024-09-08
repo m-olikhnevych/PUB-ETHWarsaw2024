@@ -36,8 +36,20 @@ query GetActiveBets {
   }
 `;
 
+const GET_RESOLVED_BETS = gql`
+query GetResolvedBets {
+  betResolveds {
+      betAddress
+      result
+      totalFalseBetAmount
+      totalTrueBetAmount
+    }
+  }
+`
+
 interface Bet {
   betId: string;
+  betAddress: string;
   params_endTimestamp: string;
 }
 
@@ -50,7 +62,9 @@ async function solveBet(betId: string) {
   console.log(`Solving bet ${betId}`);
   try {
     const fee = await prompt.estimateFee(11);
-    const value = Number(fee) / 10 ** 16;
+    const value = Number(fee) / 10 ** 17;
+    console.log(Number(fee) / 10 ** 17);
+    console.log(ethers.parseEther(value.toString()))
     const tx = await betFactory.solveBet(betId, { value: ethers.parseEther(value.toString()) });
     await tx.wait();
     console.log(`Bet ${betId} solved successfully`);
@@ -59,20 +73,32 @@ async function solveBet(betId: string) {
   }
 }
 
+async function fetchResolvedBetsAddresses() {
+  const result = await client.query({ query: GET_RESOLVED_BETS });
+  return result.data.betResolveds.map((bet: any) => bet.betAddress);
+}
+
 async function checkAndSolveBets() {
   const bets = await fetchBets();
+  const resolvedBets = await fetchResolvedBetsAddresses();
   console.log('Checking bets:', bets);
   const currentTimestamp = Math.floor(Date.now() / 1000);
   console.log('Current timestamp:', currentTimestamp);
 
   for (const bet of bets) {
     if (currentTimestamp >= parseInt(bet.params_endTimestamp)) {
-      await solveBet(bet.betId);
+      console.log(`Bet ${bet.betId} has ended`);
+      console.log({betAddress: bet.betAddress, resolvedBets});
+      console.log()
+      if(!resolvedBets.includes(bet.betAddress)) {
+        console.log("Start to resolve bet", bet.betAddress);
+        await solveBet(bet.betId);
+      }
     }
   }
 }
 
 // Run the check every minute
-setInterval(checkAndSolveBets, 60 * 1000);
+setInterval(checkAndSolveBets, 5 * 60 * 1000);
 
 console.log('Bet resolver service started');

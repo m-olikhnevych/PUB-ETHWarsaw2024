@@ -16,7 +16,7 @@ export function handleBetMade(event: BetMadeEvent): void {
     entity.save();
 }
 
-export function handlebetResolved(event: BetResolvedEvent): void {
+export function handleBetResolved(event: BetResolvedEvent): void {
     let entity = new BetResolved(
         event.transaction.hash.concatI32(event.logIndex.toI32())
     )
