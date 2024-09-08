@@ -1,4 +1,5 @@
 import { BetCreated as BetCreatedEvent } from "../generated/BetFactory/BetFactory"
+import { Bet as BetTemplate } from "../generated/templates"
 import { BetCreated } from "../generated/schema"
 
 export function handleBetCreated(event: BetCreatedEvent): void {
@@ -17,5 +18,6 @@ export function handleBetCreated(event: BetCreatedEvent): void {
   entity.transactionHash = event.transaction.hash
 
   entity.save()
+  BetTemplate.create(event.params.betAddress)
 }
 

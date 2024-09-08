@@ -45,3 +45,29 @@ dataSources:
         - event: promptsUpdated(uint256,uint256,string,string,bytes)
           handler: handlepromptsUpdated
       file: ./src/prompt.ts
+templates:
+  - kind: ethereum/contract 
+    name: Bet
+    network: optimism-sepolia
+    source:
+      abi: Bet
+    mapping:
+      kind: ethereum/contract
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/bet.ts
+      entities:
+        - BetMade
+        - BetResolved
+        - WinningsClaimed
+      abis:
+        - name: Bet
+          file: ./abis/Bet.json
+      eventHandlers:
+        - event: BetMade(indexed address,bool,uint256)
+          handler: handleBetMade
+        - event: BetResolved(bool,uint256,uint256)
+          handler: handleBetResolved
+        - event: WinningsClaimed(indexed address,uint256)
+          handler: handleWinningsClaimed
+          

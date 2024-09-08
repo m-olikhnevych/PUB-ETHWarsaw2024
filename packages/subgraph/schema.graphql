@@ -33,3 +33,35 @@ type promptsUpdated @entity(immutable: true) {
   blockTimestamp: BigInt!
   transactionHash: Bytes!
 }
+
+type BetMade @entity(immutable: true) {
+  id: Bytes!
+  betAddress: Bytes! # address
+  bettor: Bytes! # address
+  side: Boolean! # bool
+  amount: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type BetResolved @entity(immutable: true) {
+  id: Bytes!
+  betAddress: Bytes! # address
+  result: Boolean! # bool
+  totalTrueBetAmount: BigInt! # uint256
+  totalFalseBetAmount: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type WinningsClaimed @entity(immutable: true) {
+  id: Bytes!
+  betAddress: Bytes! # address
+  bettor: Bytes! # address
+  amount: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}

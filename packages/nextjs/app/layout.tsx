@@ -56,7 +56,7 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
               {children}
             </main>
             <footer className="bg-gray-800 p-4 text-center mt-auto">
-              <p>&copy; 2023 Put Ur Bet. All rights reserved.</p>
+              <p>EthWarsaw 2024 Hackathon &copy;INC4 Team</p>
             </footer>
 
           </div>
