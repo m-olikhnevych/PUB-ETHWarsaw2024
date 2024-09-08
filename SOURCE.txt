@@ -1,0 +1,19 @@
+Project name: Place Ur Bet
+Project description: The first AI-driven Prediction Market on Optimism
+
+Team Members:
+Developer: Mykhailo Olikhnevych
+
+Advisors: Serhij Olshnivsky, Illiya Likhoshva, Oleksij Kuznetsov, Sofia Pidturkina
+
+Live Demo URL: https://put-ur-bet.top/
+
+Youtube Demo: 
+
+GitHubRepo URL:
+
+Bounties: ORA, Optimism, DBForest, BuidlGuidl
+
+Wallet for payments: 0xA3dCD11Fe4e5F4e397Ad7240801C52e87AE1060e
+
+!!! Made during ETHWarsaw 2024 hackathon !!!
