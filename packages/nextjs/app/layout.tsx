@@ -46,9 +46,10 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
                       </span>
                 </Link>
                 <nav className="flex items-center space-x-4">
-                  <Link href="/predictions" className="hover:text-yellow-400">Predictions</Link>
-                  <Link href="/create" className="hover:text-yellow-400">Create</Link>
-                  <Link href="/king-of-hill" className="hover:text-yellow-400">King of the Hill</Link>
+                  <Link href="/my-bets" className="hover:text-yellow-400">My Bets</Link>
+                  <Link href="/coming-soon" className="hover:text-yellow-400">Predictions</Link>
+                  <Link href="/coming-soon" className="hover:text-yellow-400">Create</Link>
+                  <Link href="/coming-soon" className="hover:text-yellow-400">King of the Hill</Link>
                   {mounted && <ConnectButton/>}
                 </nav>
               </div>
