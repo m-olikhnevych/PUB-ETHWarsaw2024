@@ -53,6 +53,7 @@
   "dependencies": {
     "@rainbow-me/rainbowkit": "latest",
     "lucide-react": "^0.439.0",
+    "react-hot-toast": "^2.4.1",
     "wagmi": "latest"
   }
 }

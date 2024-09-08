@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { useAccount, useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
+import { useAccount, useWriteContract, useWaitForTransactionReceipt, useConfig } from 'wagmi'
+import { simulateContract } from '@wagmi/core'
 import { parseEther, formatEther } from 'viem'
 import { TrendingUp, Share2, Clock } from 'lucide-react'
 import { request, gql } from 'graphql-request'
@@ -54,6 +55,7 @@ export default function Home() {
     hash,
   })
   const router = useRouter()
+  const config = useConfig()
 
   useEffect(() => {
     const fetchBets = async () => {
@@ -77,8 +79,16 @@ export default function Home() {
       alert('Please connect your wallet first')
       return
     }
-
+    console.log("Connected wallet");
     try {
+      const result = await simulateContract(config, {
+        address: betAddress as `0x${string}`,
+        abi: contractABI,
+        functionName: 'makeBet',
+        args: [betType === 'Yes'],
+        value: parseEther(betAmounts[betAddress] || '0'),
+      });
+      console.log('Simulated result:', result)
       writeContract({
         address: betAddress as `0x${string}`,
         abi: contractABI,

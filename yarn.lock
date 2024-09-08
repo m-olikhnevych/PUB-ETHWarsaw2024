@@ -11692,7 +11692,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-hot-toast@npm:~2.4.0":
+"react-hot-toast@npm:^2.4.1, react-hot-toast@npm:~2.4.0":
   version: 2.4.1
   resolution: "react-hot-toast@npm:2.4.1"
   dependencies:
@@ -12267,6 +12267,7 @@ __metadata:
     husky: ~8.0.3
     lint-staged: ~13.2.2
     lucide-react: ^0.439.0
+    react-hot-toast: ^2.4.1
     wagmi: latest
   languageName: unknown
   linkType: soft

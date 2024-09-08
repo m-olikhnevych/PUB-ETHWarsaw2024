@@ -11,6 +11,7 @@ import '@rainbow-me/rainbowkit/styles.css'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { WagmiProvider } from 'wagmi'
 import { getDefaultConfig } from '@rainbow-me/rainbowkit'
+import { Toaster } from 'react-hot-toast'
 import '../styles/globals.css'
 
 const config = getDefaultConfig({
@@ -63,6 +64,7 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
         </RainbowKitProvider>
       </QueryClientProvider>
     </WagmiProvider>
+    <Toaster />
     </body>
     </html>
   )

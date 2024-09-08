@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   11155420: {
     Prompt: {
-      address: "0xf62bff28d61eb3c2ee8585e1812376801d77ef59",
+      address: "0x127009d03b1d2f508624954db463d2bffb76a24f",
       abi: [
         {
           type: "constructor",
@@ -329,7 +329,7 @@ const deployedContracts = {
       },
     },
     BetFactory: {
-      address: "0x2bd350652d9a7821abd03732720b6faffa0d5b07",
+      address: "0xcfe004abd90841ebb959b3880f60ee4ecb500dcc",
       abi: [
         {
           type: "constructor",

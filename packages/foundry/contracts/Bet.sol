@@ -77,7 +77,6 @@ contract Bet is Ownable {
 
   function makeBet(bool _side) public payable opened {
     require(msg.value > 0, "Bet amount should be greater than 0");
-    require(block.timestamp > getEndTimestamp(), "Bet is closed");
 
     //TODO: Could user bet on both sides?
 

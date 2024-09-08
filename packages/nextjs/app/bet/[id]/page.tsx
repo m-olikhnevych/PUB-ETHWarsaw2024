@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useParams } from 'next/navigation'
-import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt } from 'wagmi'
+import { useAccount, useReadContract, useWriteContract, useWaitForTransactionReceipt, useSimulateContract } from 'wagmi'
 import { parseEther, formatEther } from 'viem'
 import { ConnectButton } from '@rainbow-me/rainbowkit'
 import { Beer, TrendingUp, TrendingDown, Share2, Clock, DollarSign, Users } from 'lucide-react'
@@ -102,18 +102,32 @@ export default function BetPage() {
   })
 
   const handleBet = async (betType: 'Yes' | 'No') => {
+    console.log('Placing bet:', betType)
     if (!isConnected) {
       alert('Please connect your wallet first')
       return
     }
-
+    console.log('Simulating bet...')
     try {
+      const result = useSimulateContract({
+        address: contractAddress,
+        abi: contractABI,
+        functionName: 'makeBet',
+        args: [betType === 'Yes'],
+        value: parseEther(betAmount || '0'),
+      });
+      console.log('Simulated result:', result)
+      console.log('Placing bet...')
       writeContract({
         address: contractAddress,
         abi: contractABI,
         functionName: 'makeBet',
         args: [betType === 'Yes'],
         value: parseEther(betAmount || '0'),
+      }, {
+        onError: (error) => {
+          console.error('Error placing bet:', error)
+        }
       })
     } catch (error) {
       console.error('Error placing bet:', error)
