@@ -7,7 +7,7 @@ import { Clock, TrendingUp, CheckCircle, XCircle } from 'lucide-react'
 import { request, gql } from 'graphql-request'
 import { toast, Toaster } from 'react-hot-toast'
 
-const GRAPH_URL = 'http://88.99.32.158:8000/subgraphs/name/pub/subgraph'
+const GRAPH_URL = 'https://jklajsdn123.site/subgraphs/name/pub/subgraph'
 
 const GET_USER_BETS = gql`
   query GetUserBets($userAddress: Bytes!) {
@@ -26,6 +26,11 @@ const GET_USER_BETS = gql`
     betResolveds {
       betAddress
       result
+    }
+    winningsClaimeds(where: { bettor: $userAddress }) {
+      betAddress
+      bettor
+      amount
     }
   }
 `
@@ -66,12 +71,14 @@ export default function MyBets() {
         const betsWithDetails = data.betMades.map((bet: any) => {
           const betDetails = data.betCreateds.find((created: any) => created.betAddress === bet.betAddress)
           const resolution = data.betResolveds.find((resolved: any) => resolved.betAddress === bet.betAddress)
+          const claimed = data.winningsClaimeds.some((claimed: any) => claimed.betAddress === bet.betAddress)
           return {
             ...bet,
             params_name: betDetails?.params_name,
             params_endTimestamp: betDetails?.params_endTimestamp,
             resolved: !!resolution,
-            result: resolution ? resolution.result : null
+            result: resolution ? resolution.result : null,
+            claimed: claimed
           }
         })
         setUserBets(betsWithDetails)
@@ -95,6 +102,14 @@ export default function MyBets() {
   const activeBets = sortedBets.filter(bet => parseInt(bet.params_endTimestamp) * 1000 >= Date.now())
   const endedBets = sortedBets.filter(bet => parseInt(bet.params_endTimestamp) * 1000 < Date.now())
 
+  const updateBetClaimed = (betId: string) => {
+    setUserBets(prevBets =>
+        prevBets.map(bet =>
+            bet.id === betId ? { ...bet, claimed: true } : bet
+        )
+    )
+  }
+
   return (
       <div className="bg-gray-900 text-white min-h-screen">
         <Toaster />
@@ -111,7 +126,7 @@ export default function MyBets() {
                       <h3 className="text-2xl font-semibold mb-4">Active Bets</h3>
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                         {activeBets.map((bet) => (
-                            <BetCard key={bet.id} bet={bet} />
+                            <BetCard key={bet.id} bet={bet} onClaim={() => updateBetClaimed(bet.id)} />
                         ))}
                       </div>
                     </>
@@ -121,7 +136,7 @@ export default function MyBets() {
                       <h3 className="text-2xl font-semibold mb-4">Ended Bets</h3>
                       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {endedBets.map((bet) => (
-                            <BetCard key={bet.id} bet={bet} />
+                            <BetCard key={bet.id} bet={bet} onClaim={() => updateBetClaimed(bet.id)} />
                         ))}
                       </div>
                     </>
@@ -133,7 +148,7 @@ export default function MyBets() {
   )
 }
 
-function BetCard({ bet }: { bet: any }) {
+function BetCard({ bet, onClaim }: { bet: any; onClaim: () => void }) {
   const { writeContract, data: writeData, isPending, isError } = useWriteContract()
 
   const { data: winnings } = useReadContract({
@@ -162,8 +177,9 @@ function BetCard({ bet }: { bet: any }) {
   useEffect(() => {
     if (isClaimSuccess) {
       toast.success('Winnings claimed successfully!')
+      onClaim()
     }
-  }, [isClaimSuccess])
+  }, [isClaimSuccess, onClaim])
 
   useEffect(() => {
     if (isError) {
@@ -172,17 +188,26 @@ function BetCard({ bet }: { bet: any }) {
   }, [isError])
 
   const isBetEnded = parseInt(bet.params_endTimestamp) * 1000 < Date.now()
+  const hasUserWon = bet.resolved && bet.result === bet.side
+  console.log("BET!!!!", bet)
 
   const [isHovered, setIsHovered] = useState(false)
 
   return (
       <div
-          className={`bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-all duration-300 ${
+          className={`bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-all duration-300 relative ${
               isHovered ? 'transform scale-105' : ''
           }`}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
       >
+        {bet.claimed && (
+            <div className="absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center z-10">
+              <div className="text-4xl font-bold text-yellow-400 transform -rotate-45 border-4 border-yellow-400 px-4 py-2 rounded">
+                ENDED
+              </div>
+            </div>
+        )}
         <div className="p-6 space-y-4">
           <div className="flex items-start justify-between">
             <h3 className="text-xl font-bold text-white leading-tight">{bet.params_name}</h3>
@@ -211,14 +236,14 @@ function BetCard({ bet }: { bet: any }) {
           ) : bet.resolved ? (
               <>
                 <div className="flex items-center justify-center space-x-2">
-                  {bet.result === bet.side ? (
+                  {hasUserWon ? (
                       <CheckCircle className="w-5 h-5 text-green-500" />
                   ) : (
                       <XCircle className="w-5 h-5 text-red-500" />
                   )}
-                  <span>{bet.result === bet.side ? 'Won' : 'Lost'}</span>
+                  <span>{hasUserWon ? 'Won' : 'Lost'}</span>
                 </div>
-                {winnings && winnings > BigInt(0) && (
+                {hasUserWon && !bet.claimed && (
                     <button
                         onClick={handleClaim}
                         disabled={isPending || isConfirming}
@@ -228,7 +253,7 @@ function BetCard({ bet }: { bet: any }) {
                                 : 'bg-yellow-400 hover:bg-yellow-500 text-gray-900'
                         }`}
                     >
-                      {isPending || isConfirming ? 'Claiming...' : 'Claim Winnings'}
+                      {isPending || isConfirming ? 'Claiming...' : 'Claim Rewards'}
                     </button>
                 )}
               </>
@@ -237,7 +262,7 @@ function BetCard({ bet }: { bet: any }) {
                 Waiting for result
               </div>
           )}
-          {winnings && winnings > BigInt(0) && (
+          {winnings && winnings > BigInt(0) && !bet.claimed && (
               <p className="text-sm text-green-400">Claimable: {formatEther(winnings)} ETH</p>
           )}
         </div>

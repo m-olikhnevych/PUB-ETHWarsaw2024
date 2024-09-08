@@ -8,7 +8,7 @@ import { TrendingUp, TrendingDown, Share2, Clock, DollarSign } from 'lucide-reac
 import { toast, Toaster } from 'react-hot-toast'
 import { request, gql } from 'graphql-request'
 
-const GRAPH_URL = 'http://88.99.32.158:8000/subgraphs/name/pub/subgraph'
+const GRAPH_URL = 'https://jklajsdn123.site/subgraphs/name/pub/subgraph'
 
 const GET_BET_INFO = gql`
   query GetBetInfo($betAddress: Bytes!, $userAddress: Bytes!) {

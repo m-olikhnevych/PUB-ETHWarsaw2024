@@ -8,7 +8,7 @@ import { TrendingUp, Share2, Clock, X, Copy, Check } from 'lucide-react'
 import { request, gql } from 'graphql-request'
 import { toast, Toaster } from 'react-hot-toast'
 
-const GRAPH_URL = 'http://88.99.32.158:8000/subgraphs/name/pub/subgraph'
+const GRAPH_URL = 'https://jklajsdn123.site/subgraphs/name/pub/subgraph'
 
 const GET_ACTIVE_BETS = gql`
   query GetActiveBets {
