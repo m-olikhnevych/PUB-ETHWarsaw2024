@@ -1,0 +1,142 @@
+[
+  {
+    "type": "constructor",
+    "inputs": [
+      {
+        "name": "_prompt",
+        "type": "address",
+        "internalType": "contract Prompt"
+      }
+    ],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "betCounter",
+    "inputs": [],
+    "outputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "bets",
+    "inputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
+    "outputs": [
+      { "name": "id", "type": "uint256", "internalType": "uint256" },
+      { "name": "betAddress", "type": "address", "internalType": "address" },
+      { "name": "requestId", "type": "uint256", "internalType": "uint256" },
+      {
+        "name": "status",
+        "type": "uint8",
+        "internalType": "enum BetFactory.SolveStatus"
+      }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "createBet",
+    "inputs": [
+      {
+        "name": "params",
+        "type": "tuple",
+        "internalType": "struct Bet.BetParams",
+        "components": [
+          { "name": "name", "type": "string", "internalType": "string" },
+          { "name": "description", "type": "string", "internalType": "string" },
+          { "name": "prompt", "type": "string", "internalType": "string" },
+          {
+            "name": "endTimestamp",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ]
+      }
+    ],
+    "outputs": [
+      { "name": "id", "type": "uint256", "internalType": "uint256" },
+      { "name": "betAddress", "type": "address", "internalType": "address" }
+    ],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "getBet",
+    "inputs": [
+      { "name": "betId", "type": "uint256", "internalType": "uint256" }
+    ],
+    "outputs": [{ "name": "", "type": "address", "internalType": "address" }],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "prompt",
+    "inputs": [],
+    "outputs": [
+      { "name": "", "type": "address", "internalType": "contract Prompt" }
+    ],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "requestsToBets",
+    "inputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
+    "outputs": [{ "name": "", "type": "uint256", "internalType": "uint256" }],
+    "stateMutability": "view"
+  },
+  {
+    "type": "function",
+    "name": "resolveBet",
+    "inputs": [
+      { "name": "requestId", "type": "uint256", "internalType": "uint256" },
+      { "name": "_result", "type": "bool", "internalType": "bool" }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "solveBet",
+    "inputs": [
+      { "name": "betId", "type": "uint256", "internalType": "uint256" }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
+  },
+  {
+    "type": "event",
+    "name": "BetCreated",
+    "inputs": [
+      {
+        "name": "betAddress",
+        "type": "address",
+        "indexed": false,
+        "internalType": "address"
+      },
+      {
+        "name": "betId",
+        "type": "uint256",
+        "indexed": false,
+        "internalType": "uint256"
+      },
+      {
+        "name": "params",
+        "type": "tuple",
+        "indexed": false,
+        "internalType": "struct Bet.BetParams",
+        "components": [
+          { "name": "name", "type": "string", "internalType": "string" },
+          { "name": "description", "type": "string", "internalType": "string" },
+          { "name": "prompt", "type": "string", "internalType": "string" },
+          {
+            "name": "endTimestamp",
+            "type": "uint256",
+            "internalType": "uint256"
+          }
+        ]
+      }
+    ],
+    "anonymous": false
+  }
+]
+

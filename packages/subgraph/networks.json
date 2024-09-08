@@ -1,0 +1,11 @@
+{
+  "optimism-sepolia": {
+    "BetFactory": {
+      "address": "0x2BD350652d9A7821abd03732720b6FAfFA0D5b07",
+      "startBlock": 16960355
+    },
+    "Prompt": {
+      "address": "0xf62bff28d61eb3c2ee8585e1812376801d77ef59"
+    }
+  }
+}

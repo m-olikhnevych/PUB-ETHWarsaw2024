@@ -1,0 +1,35 @@
+type BetCreated @entity(immutable: true) {
+  id: Bytes!
+  betAddress: Bytes! # address
+  betId: BigInt! # uint256
+  params_name: String! # string
+  params_description: String! # string
+  params_prompt: String! # string
+  params_endTimestamp: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type promptRequest @entity(immutable: true) {
+  id: Bytes!
+  requestId: BigInt! # uint256
+  sender: Bytes! # address
+  modelId: BigInt! # uint256
+  prompt: String! # string
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type promptsUpdated @entity(immutable: true) {
+  id: Bytes!
+  requestId: BigInt! # uint256
+  modelId: BigInt! # uint256
+  input: String! # string
+  output: String! # string
+  callbackData: Bytes! # bytes
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}

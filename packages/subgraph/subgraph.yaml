@@ -1,0 +1,47 @@
+specVersion: 1.0.0
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: BetFactory
+    network: optimism-sepolia
+    source:
+      address: "0x2BD350652d9A7821abd03732720b6FAfFA0D5b07"
+      abi: BetFactory
+      startBlock: 16960355
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - BetCreated
+      abis:
+        - name: BetFactory
+          file: ./abis/BetFactory.json
+      eventHandlers:
+        - event: BetCreated(address,uint256,(string,string,string,uint256))
+          handler: handleBetCreated
+      file: ./src/bet-factory.ts
+  - kind: ethereum
+    name: Prompt
+    network: optimism-sepolia
+    source:
+      address: "0xf62bff28d61eb3c2ee8585e1812376801d77ef59"
+      abi: Prompt
+      startBlock: 16960355
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - promptRequest
+        - promptsUpdated
+      abis:
+        - name: Prompt
+          file: ./abis/Prompt.json
+      eventHandlers:
+        - event: promptRequest(uint256,address,uint256,string)
+          handler: handlepromptRequest
+        - event: promptsUpdated(uint256,uint256,string,string,bytes)
+          handler: handlepromptsUpdated
+      file: ./src/prompt.ts
