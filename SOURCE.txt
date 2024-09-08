@@ -6,14 +6,14 @@ Developer: Mykhailo Olikhnevych
 
 Live Demo URL: https://put-ur-bet.top/
 
-Youtube Demo: 
+Youtube Demo: https://www.youtube.com/watch?v=hMd_I5NhVR4
 
 GitHubRepo URL: https://github.com/m-olikhnevych/PUB-ETHWarsaw2024
 
 Bounties: ORA, Optimism, DBForest, BuidlGuidl
 
-Wallet for payments: 0xA3dCD11Fe4e5F4e397Ad7240801C52e87AE1060e
+Wallet for payments (or donations XD ): 0xA3dCD11Fe4e5F4e397Ad7240801C52e87AE1060e
 
 !!! Made during ETHWarsaw 2024 hackathon !!!
 
-KUDOS: Serhij Olshnivsky, Illiya Likhoshva, Oleksij Kuznetsov, Sofia Pidturkina. Thanks for help, you are the best!!!
+KUDOS: Serhij Olshanivsky, Illiya Likhoshva, Oleksij Kuznetsov, Sofia Pidturkina, Ivan Skrypachov. Thanks for help guys, you are the best!!!
